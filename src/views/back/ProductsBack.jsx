@@ -108,6 +108,15 @@ function ProductsBack() {
 
     };
 
+    const uploadImg = async () => {
+        try {
+            const res = await axios.post(`${apiBase}v2/admin/${apiPath}/admin/upload`);
+            console.log(res);
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
     const sentProduct = async () => {
         try {
             const res = await axios.post(`${apiBase}v2/api/${apiPath}/admin/product`, { data: addProduct }, {
@@ -189,7 +198,7 @@ function ProductsBack() {
                         </button>
                     </div>
                     {showAddModal &&
-                        <Addproduct setShowAddModal={setShowAddModal} addProduct={addProduct} handleProduct={handleProduct} sentProduct={sentProduct} addImg={addImg} deleteImg={deleteImg} handleImgUrl={handleImgUrl} />
+                        <Addproduct setShowAddModal={setShowAddModal} addProduct={addProduct} handleProduct={handleProduct} sentProduct={sentProduct} addImg={addImg} deleteImg={deleteImg} handleImgUrl={handleImgUrl} uploadImg={uploadImg} />
                     }
 
                     <div className='row'>

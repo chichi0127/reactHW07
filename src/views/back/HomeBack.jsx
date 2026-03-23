@@ -12,7 +12,6 @@ const apiPath = import.meta.env.VITE_API_PATH;
 function HomeBack() {
 
     const navigate = useNavigate();
-    const [BPtoken, setToken] = useState("");
     const [user, setUser] = useState({
         username: '',
         password: ''
@@ -32,7 +31,6 @@ function HomeBack() {
         try {
             const res = await axios.post(`${apiBase}v2/admin/signin`, user);
             const { token, expired } = res.data;
-            setToken(token);
 
             document.cookie = `BPToken=${token}; expires=${new Date(expired)}; path=/`;
 
@@ -49,7 +47,7 @@ function HomeBack() {
     useEffect(() => {
 
         const BPCookie = document.cookie.replace(
-            /(?:(?:^|.*;\s*)BPToken\s*\=\s*([^;]*).*$)|^.*$/,
+            /(?:(?:^|.*;\s*)BPToken\s*=\s*([^;]*).*$)|^.*$/,
             "$1",
         );
 
@@ -79,7 +77,7 @@ function HomeBack() {
 
         checkLogin();
 
-    }, [])
+    }, [navigate])
 
     return (
         <>
