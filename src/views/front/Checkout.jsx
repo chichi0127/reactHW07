@@ -1,18 +1,31 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
+import { useForm } from "react-hook-form";
 
 
 const apiBase = import.meta.env.VITE_API_BASE;
 const apiPath = import.meta.env.VITE_API_PATH;
 
 
-function Cart() {
+function Checkout() {
     const BPtoken = document.cookie
         .replace(/(?:(?:^|.*;\s*)BPToken\s*=\s*([^;]*).*$)|^.*$/, "$1");
 
 
     const [cartList, setCartList] = useState();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm({ mode: "onBlur" });
+
+    const onSubmit = (data) => {
+        console.log("表單資料:", data);
+        // 處理表單提交
+        reset(); // 重置表單
+    };
 
 
     const getCart = async () => {
@@ -28,56 +41,6 @@ function Cart() {
             console.error(error);
         }
     };
-    // 把這三個功能做完
-    const addOne = async (id) => {
-        const dataCart = {
-            "product_id": id,
-            "qty": 1
-        };
-
-        try {
-            const res = await axios.post(`${apiBase}v2/api/${apiPath}/cart`, { data: dataCart });
-            console.log(res);
-            await getCart();
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    const deleteOne = async (id) => {
-        const dataCart = {
-            "product_id": id,
-            "qty": -1
-        };
-
-        try {
-            const res = await axios.post(`${apiBase}v2/api/${apiPath}/cart`, { data: dataCart });
-            console.log(res);
-            await getCart();
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    const deleteItem = async (id) => {
-        try {
-            const res = await axios.delete(`${apiBase}v2/api/${apiPath}/cart/${id}`);
-            console.log(res);
-            await getCart();
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    const deleteAll = async () => {
-        try {
-            const res = await axios.delete(`${apiBase}v2/api/${apiPath}/carts`);
-            console.log(res);
-            await getCart();
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
 
 
@@ -127,14 +90,6 @@ function Cart() {
                                                     <li className="list-group-item"><p className="card-text">剩餘數量：<span className='text-warning'>{cart.unit}</span></p></li>
 
                                                 </ul>
-                                                <div className="card-title d-flex justify-content-end align-items-center">
-                                                    <h5 className="fw-semibold d-inline mb-0 mx-3">購買數量:</h5>
-                                                    <button className="btn fw-bold shadow" type="button" onClick={() => deleteOne(cart.id)}>-</button>
-                                                    <h5 className="card-title text-success fw-semibold mb-0 mx-3">{carts.qty}</h5>
-                                                    <button className="btn fw-bold shadow" type="button" onClick={() => addOne(cart.id)}>+</button>
-                                                    <button className="btn fw-bold btn-danger mx-3" type="button" onClick={() => deleteItem(carts.id)}>刪除</button>
-                                                </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -150,9 +105,11 @@ function Cart() {
 
 
                 }
+                <form onSubmit={handleSubmit(onSubmit)}>
+
+                </form>;
                 <div className="d-flex justify-content-center py-5">
-                    <button className="btn fw-bold btn-danger" type="button" onClick={deleteAll}>清除購物車</button>
-                    <Link className="btn fw-bold mx-2 btn-primary" to='/checkout'>結帳</Link>
+                    <button className="btn fw-bold btn-danger" type="button" >送出訂單</button>
                 </div>
 
 
@@ -161,4 +118,4 @@ function Cart() {
     )
 }
 
-export default Cart;
+export default Checkout;

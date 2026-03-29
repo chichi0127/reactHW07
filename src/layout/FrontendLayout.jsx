@@ -16,6 +16,12 @@ function FrontendLayout() {
                     <li className="nav-item">
                         <Link className="nav-link" to='/cart'><i className="bi bi-cart-fill"></i></Link>
                     </li>
+                    {/* <li className="nav-item">
+                        <Link className="nav-link" to='/checkout'>結帳</Link>
+                    </li> */}
+                    <li className="nav-item">
+                        <Link className="nav-link" to='/login'><i class="bi bi-person-circle"></i></Link>
+                    </li>
                 </ul>
             </header>
             <main>
