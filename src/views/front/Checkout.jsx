@@ -51,7 +51,7 @@ function Checkout() {
     return (
         <>
             <div className="bg-color min-vh-100 m-0 p-0">
-                <h2 className="text-center fw-semibold pt-3 text-light pb-3">購物車頁</h2>
+                <h2 className="text-center fw-semibold pt-3 text-light pb-3">結帳頁</h2>
 
                 {
                     cartList && cartList.length > 0 ? (cartList.map(carts => {
@@ -106,10 +106,25 @@ function Checkout() {
 
                 }
                 <form onSubmit={handleSubmit(onSubmit)}>
-
+                    <div className="w-50 mx-auto">
+                        <div className='maininput mt-3 mb-3'>
+                            <label htmlFor="name" className='form-label text-light fs-5'>客戶姓名</label>
+                            <input type="text" name='name' id='name' className='form-control' placeholder="請輸入姓名" />
+                            <label htmlFor="mail" className='form-label text-light fs-5 mt-3'>電子信箱</label>
+                            <input type="email" name='email' id='mail' className='form-control' placeholder='請輸入信箱' />
+                            <label htmlFor="tel" className='form-label text-light fs-5 mt-3'>電話號碼</label>
+                            <input type="tel" name='tel' id='tel' className='form-control' placeholder='請輸入電話號碼' />
+                            <label htmlFor="address" className='form-label text-light fs-5 mt-3'>收件地址</label>
+                            <input type="text" name='address' id='address' className='form-control' placeholder='請輸入地址' />
+                            <label htmlFor="message" className='form-label text-light fs-5 mt-3'>留言</label>
+                            <textarea id='message' className='form-control' cols="30"
+                                rows="10" placeholder='有什麼想告訴賣家嗎?' />
+                        </div>
+                    </div>
+                    {/* 0329進度，明天寫表單內容 */}
                 </form>;
                 <div className="d-flex justify-content-center py-5">
-                    <button className="btn fw-bold btn-danger" type="button" >送出訂單</button>
+                    <button className="btn fw-bold btn-primary" type="button" >送出訂單</button>
                 </div>
 
 
