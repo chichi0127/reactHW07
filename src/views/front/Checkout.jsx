@@ -12,16 +12,6 @@ function Checkout() {
     const BPtoken = document.cookie
         .replace(/(?:(?:^|.*;\s*)BPToken\s*=\s*([^;]*).*$)|^.*$/, "$1");
 
-    const orderData = {
-        "user": {
-            "name": "test",
-            "email": "test@gmail.com",
-            "tel": "0912346768",
-            "address": "kaohsiung"
-        },
-        "message": "這是留言"
-    }
-
     const [cartList, setCartList] = useState();
     const {
         register,
@@ -30,26 +20,31 @@ function Checkout() {
         reset,
     } = useForm({ mode: "onChange" });
 
-    // 0330進度，串API
-    const onSubmit = async (data) => {
-        console.log("表單資料:", data);
-        // 處理表單提交
+    const onSubmit = async (formdata) => {
+        console.log("表單資料:", formdata);
+
+        const data = {
+            user: {
+                "name": formdata.name,
+                "email": formdata.email,
+                "tel": formdata.tel,
+                "address": formdata.address
+            },
+            message: formdata.message
+        }
+
         try {
             const res = await axios.post(`${apiBase}v2/api/${apiPath}/order`, {
-                data: {
-                    orderData
-                }
+                data: data
             });
-            console.log("數據", res.data.data.carts);
-            setCartList(res.data.data.carts)
+            console.log("數據", res);
+
         } catch (error) {
             console.error(error);
         }
-        reset(); // 重置表單
+        reset();
+        getCart();
     };
-
-
-
 
     const getCart = async () => {
         try {
@@ -134,7 +129,7 @@ function Checkout() {
                             <label htmlFor="name" className='form-label text-light fs-5'>客戶姓名</label>
                             <input type="text" name='name' id='name' className='form-control' placeholder="請輸入姓名" {...register("name", { required: "姓名為必填項目", minLength: { value: 2, message: "姓名最少2個字" }, })} />
                             {errors.name && (
-                                <p className="text-danger py-2 mb-0">{errors.name.message}</p>)
+                                <p className="text-danger mt-2 mb-0">{errors.name.message}</p>)
                             }
                             <label htmlFor="mail" className='form-label text-light fs-5 mt-3'>電子信箱</label>
                             <input type="email" name='email' id='mail' className='form-control' placeholder='請輸入信箱' {...register("email", {
@@ -144,7 +139,7 @@ function Checkout() {
                                 },
                             })} />
                             {errors.email && (
-                                <p className="text-danger py-2 mb-0">{errors.email.message}</p>
+                                <p className="text-danger mt-2 mb-0">{errors.email.message}</p>
                             )}
                             <label htmlFor="tel" className='form-label text-light fs-5 mt-3'>手機號碼</label>
                             <input type="tel" name='tel' id='tel' className='form-control' placeholder='請輸入手機號碼' {...register("tel", {
@@ -154,12 +149,12 @@ function Checkout() {
                                 },
                             })} />
                             {errors.tel && (
-                                <p className="text-danger py-2 mb-0">{errors.tel.message}</p>
+                                <p className="text-danger mt-2 mb-0">{errors.tel.message}</p>
                             )}
                             <label htmlFor="address" className='form-label text-light fs-5 mt-3'>收件地址</label>
                             <input type="text" name='address' id='address' className='form-control' placeholder='請輸入地址' {...register("address", { required: "地址為必填項目", })} />
                             {errors.address && (
-                                <p className="text-danger py-2 mb-0">{errors.address.message}</p>
+                                <p className="text-danger mt-2 mb-0">{errors.address.message}</p>
                             )}
                             <label htmlFor="message" className='form-label text-light fs-5 mt-3'>留言</label>
                             <textarea id='message' className='form-control' cols="30"
