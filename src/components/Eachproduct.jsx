@@ -90,9 +90,11 @@ function Eachproduct({ revisedProduct, deleteProduct, product, onClose }) {
                             <h5 className="card-title my-2 fw-semibold">分類：{product.category}</h5>
                             <p className="card-text">{product.content}</p>
                             <p className="card-text">發行日期：<span>{product.publish_date}</span></p>
+                            <p className="card-text">啟用狀態：<span className='fw-semibold'>{product.is_enabled ? "是" : "否"}</span></p>
                             <p className="card-text">原價：<span className='text-decoration-line-through'>{product.origin_price}</span></p>
                             <p className="card-text fs-5">售價：<span className='text-danger fw-semibold'>{product.price}</span></p>
                             <p className="card-text fs-5">小卡人物：<span className='text-primary fw-semibold'>{product.card_person}</span></p>
+
 
                         </div>
 

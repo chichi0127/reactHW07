@@ -10,6 +10,7 @@ import HomeBack from "./views/back/HomeBack";
 import ProductsBack from "./views/back/ProductsBack"
 import Checkout from "./views/front/Checkout";
 import Login from "./views/front/Login";
+import OrderBack from "./views/back/OrderBack"
 
 
 
@@ -56,6 +57,10 @@ export const router = createHashRouter([
             {
                 path: 'product',
                 element: <ProductsBack />,
+            },
+            {
+                path: 'order',
+                element: <OrderBack />,
             },
 
         ],

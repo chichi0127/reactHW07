@@ -60,8 +60,6 @@ function Checkout() {
         }
     };
 
-
-
     useEffect(() => {
         getCart();
     }, []);
