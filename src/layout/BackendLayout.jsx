@@ -1,4 +1,5 @@
 import { Outlet, Link } from "react-router";
+import Logout from '../components/Logout';
 
 
 function BackendLayout() {
@@ -15,6 +16,9 @@ function BackendLayout() {
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link fs-5 fw-semibold" to='/admin/order'>訂單列表</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link fs-5 fw-semibold" to='/'>登出</Link>
                     </li>
                 </ul>
             </header>
