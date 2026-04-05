@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
+import { useDispatch } from 'react-redux';
+import { createAsyncMessage } from '../../slice/messageSlice'
 
 
 const apiBase = import.meta.env.VITE_API_BASE;
@@ -13,6 +15,7 @@ function Cart() {
 
 
     const [cartList, setCartList] = useState();
+    const dispatch = useDispatch();
 
 
     const getCart = async () => {
@@ -23,7 +26,7 @@ function Cart() {
                 }
             });
             console.log("數據", res.data.data.carts);
-            setCartList(res.data.data.carts)
+            setCartList(res.data.data.carts);
         } catch (error) {
             console.error(error);
         }
@@ -39,8 +42,10 @@ function Cart() {
             const res = await axios.post(`${apiBase}v2/api/${apiPath}/cart`, { data: dataCart });
             console.log(res);
             await getCart();
+            dispatch(createAsyncMessage(res.data));
         } catch (error) {
             console.log(error);
+            dispatch(createAsyncMessage(error.response.data))
         }
     }
 
@@ -54,8 +59,11 @@ function Cart() {
             const res = await axios.post(`${apiBase}v2/api/${apiPath}/cart`, { data: dataCart });
             console.log(res);
             await getCart();
+            dispatch(createAsyncMessage(res.data));
         } catch (error) {
             console.log(error);
+            dispatch(createAsyncMessage(error.response
+                .data))
         }
     }
 
@@ -64,8 +72,11 @@ function Cart() {
             const res = await axios.delete(`${apiBase}v2/api/${apiPath}/cart/${id}`);
             console.log(res);
             await getCart();
+            dispatch(createAsyncMessage(res.data));
         } catch (error) {
             console.log(error);
+            dispatch(createAsyncMessage(error.response
+                .data))
         }
     }
 
@@ -74,8 +85,11 @@ function Cart() {
             const res = await axios.delete(`${apiBase}v2/api/${apiPath}/carts`);
             console.log(res);
             await getCart();
+            dispatch(createAsyncMessage(res.data));
         } catch (error) {
             console.log(error);
+            dispatch(createAsyncMessage(error.response
+                .data))
         }
     }
 

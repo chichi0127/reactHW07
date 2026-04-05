@@ -18,7 +18,7 @@ function FrontendLayout() {
                     </li>
 
                     <li className="nav-item">
-                        <Link className="nav-link" to='/login'><i class="bi bi-person-circle"></i></Link>
+                        <Link className="nav-link" to='/login'><i className="bi bi-person-circle"></i></Link>
                     </li>
                 </ul>
             </header>

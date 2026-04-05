@@ -5,6 +5,8 @@ import Addproduct from '../../components/Addproduct';
 import Eachproduct from '../../components/Eachproduct';
 import ProductCard from '../../components/ProductCard';
 import Pagination from '../../components/Pagination';
+import { useDispatch } from 'react-redux';
+import { createAsyncMessage } from '../../slice/messageSlice'
 
 const apiBase = import.meta.env.VITE_API_BASE;
 const apiPath = import.meta.env.VITE_API_PATH;
@@ -31,6 +33,7 @@ function ProductsBack() {
         imageUrl: '',
         imagesUrl: [],
     });
+    const dispatch = useDispatch();
 
     const handleProduct = (e) => {
         const { name, value, type, checked } = e.target;
@@ -85,7 +88,6 @@ function ProductsBack() {
             console.log("取得資料:", res.data);
             setProducts(res.data.products);
             setPagination(res.data.pagination);
-
         } catch (error) {
             console.error("取得資料時發生錯誤:", error.response
                 .data);
@@ -126,8 +128,11 @@ function ProductsBack() {
                 imageUrl: res.data.imageUrl,
             }));
             console.log(res);
+            dispatch(createAsyncMessage(res.data));
         } catch (error) {
             console.log(error.message);
+            dispatch(createAsyncMessage(error.response
+                .data))
         }
     }
 
@@ -141,9 +146,11 @@ function ProductsBack() {
             console.log("新增資料:", res.data.message);
             setShowAddModal(false); // 關閉視窗
             getData(); // 重新整理列表
-
+            dispatch(createAsyncMessage(res.data));
         } catch (error) {
             console.error("新增資料時發生錯誤:", error.response);
+            dispatch(createAsyncMessage(error.response
+                .data))
         }
     };
 
@@ -157,9 +164,11 @@ function ProductsBack() {
             console.log("刪除資料:", res.data.message);
             setSelectProduct(null); // 關閉視窗
             getData(); // 重新整理列表
-
+            dispatch(createAsyncMessage(res.data));
         } catch (error) {
             console.error("刪除資料時發生錯誤:", error.response);
+            dispatch(createAsyncMessage(error.response
+                .data))
         }
     };
 
@@ -173,8 +182,11 @@ function ProductsBack() {
             console.log("修改資料:", res.data);
             setSelectProduct(null)
             getData(); // 重新整理列表
+            dispatch(createAsyncMessage(res.data));
         } catch (error) {
             console.error("修改資料時發生錯誤:", error.response);
+            dispatch(createAsyncMessage(error.response
+                .data))
         }
     };
 

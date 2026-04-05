@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { createAsyncMessage } from '../../slice/messageSlice'
 
 
 const apiBase = import.meta.env.VITE_API_BASE;
@@ -16,6 +18,7 @@ function SingleProduct() {
         "qty": 1
     };
     const navigator = useNavigate();
+    const dispatch = useDispatch();
 
     const handleBack = () => {
         return navigator(-1);
@@ -26,8 +29,10 @@ function SingleProduct() {
             const res = await axios.post(`${apiBase}v2/api/${apiPath}/cart`, { data: dataCart });
             console.log(res);
             navigator("/product");
+            dispatch(createAsyncMessage(res.data));
         } catch (error) {
             console.log(error);
+            dispatch(createAsyncMessage(error.response.data))
         }
     }
 

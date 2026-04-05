@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router'
 import '../../assets/all.scss'
 import axios from 'axios'
 import { useForm } from "react-hook-form";
+import { useDispatch } from 'react-redux';
+import { createAsyncMessage } from '../../slice/messageSlice'
 
 
 const apiBase = import.meta.env.VITE_API_BASE;
@@ -13,6 +15,7 @@ const apiPath = import.meta.env.VITE_API_PATH;
 function Login() {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const {
         register,
@@ -36,11 +39,13 @@ function Login() {
             document.cookie = `BPToken=${token}; expires=${new Date(expired)}; path=/`;
 
             axios.defaults.headers.common['Authorization'] = token;
-
+            dispatch(createAsyncMessage(res.data));
             navigate('/admin/product');
 
         } catch (error) {
             console.log(error.message);
+            dispatch(createAsyncMessage(error.response
+                .data));
             navigate('/Login');
             reset();
         }
